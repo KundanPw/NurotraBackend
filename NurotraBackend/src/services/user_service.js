@@ -1,7 +1,7 @@
 const {StatusCode} = require('http-status-codes');
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
-// const SECRET_KEY = "your_jwt_secret";
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = "your_jwt_secret";
 const { UserRepository } = require('../repositories');
 const { ServerConfig } = require('../config');
 
@@ -36,6 +36,32 @@ async function registerUser(data) {
     }
 }
 
+async function loginUser(email, password) {
+    try {
+        const user = await userRepository.findByEmail(email);
+        
+        const isValidPassword = await bcrypt.compare(password, user.password);
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: user.id, email: user.email}, process.env.JWT_SECRET,
+            { expiresIn: "2h" } // Token expires in 2 hours
+        );
+
+        if (!user||!isValidPassword) {
+            throw new Error('Invalid email or password');
+        }
+
+        return {
+            email: user.email,
+            token,
+         };
+    } catch (error) {
+        throw new Error("Login service failed: " + error.message);
+    }
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 };

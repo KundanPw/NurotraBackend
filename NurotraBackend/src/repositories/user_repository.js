@@ -8,7 +8,7 @@ class UserRepository extends CrudRepository{
     }
     async findByEmail(email) {
         // Simulate finding a user by email in the "database"
-        return User.find(user => user.email === email);
+        return await User.findOne({ where: { email } });
     }
 }
 
