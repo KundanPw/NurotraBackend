@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   UserProfile.init({
     nuroId: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
@@ -27,11 +27,26 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    instagramUrl: DataTypes.STRING,
-    followerCount: DataTypes.ENUM,
-    profilePicture: DataTypes.STRING,
-    previousBrandWorked: DataTypes.BOOLEAN,
-    brandName: DataTypes.STRING
+    instagramUrl: {
+      type: DataTypes.STRING,
+      validate:{
+        isUrl: true
+      }
+    },
+    followerCount: {
+      type: DataTypes.INTEGER,
+    },
+    profilePicture: {
+      type: DataTypes.STRING
+    },
+    previousBrandWorked: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    brandName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   }, {
     sequelize,
     modelName: 'UserProfile',
