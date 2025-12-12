@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class company extends Model {
+  class Company extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  company.init({
+  Company.init({
     nuroId: {
       type:DataTypes.STRING,
       allowNull: false,
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     companyType: {
-      type:DataTypes.ENUM,
+      type:DataTypes.ENUM("Startup", "Small Business", "Medium", "Enterprise"),
       allowNull: false
     },
     contactInfo: {
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'company',
+    modelName: 'Company',
   });
-  return company;
+  return Company;
 };

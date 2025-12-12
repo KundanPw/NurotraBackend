@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       companyType: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM("Startup", "Small Business", "Medium", "Enterprise")
       },
       contactInfo: {
         type: Sequelize.STRING
